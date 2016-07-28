@@ -18,7 +18,7 @@ cd ../..
 # 
 # We prefix with /usr so that scons install places output in a place such that
 #   our build system doesn't need to care where we built IoTivity.
-scons SECURED=1 RELEASE=TRUE --prefix=/usr
+scons SECURED=0 RELEASE=TRUE --prefix=/usr
 
 # At this point, you could "scons c" and re-run the build to produce a separate,
 #   parallel SDK (for example, android).
