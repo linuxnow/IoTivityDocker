@@ -1,15 +1,27 @@
 # IoTivityDocker
-Secure IoTivity build environment based on Ubuntu.
+
+IoTivity build environment based on Ubuntu.
 Sample thermostat device included.
 
-How to use this Dockerfile.
+How to use these Dockerfiles
+
+To build a base image, with IoTivity built and installed:
 
     git clone git@github.com:datasnap-io/IoTivityDocker.git
-    docker build -t='my_name' IoTivityDocker/
-    docker run -iv <your root source path>:/src_root my_name
+    cd IoTivityDocker
+    docker build ./base_image -t datasnap-io/iotivity-full
 
-Or if you are only interested in invoking Thermostat...
+By default, the image is built with the following functionality flags defined:
 
-    docker run -i my_name /root/runThermostat.sh
+    SECURED=1
+    RELEASE=true
+    LOGGING=true
 
-The last command should drop you into a shell where you can execute your build.
+Specialized versions with different values for these flags can be created as well:
+
+    docker build ./base_image -t datasnap-io/iotivity-quiet --build-arg LOGGING=false
+
+If you are interested in invoking Thermostat...
+
+    docker build ./example -t thermostat
+    docker run -it thermostat ./Thermostat

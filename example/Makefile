@@ -14,7 +14,6 @@ CPP_STANDARD       = gnu++11
 # Environmental awareness...
 ###########################################################################
 SHELL        = /bin/sh
-WHO_I_AM     = $(shell whoami)
 WHERE_I_AM   = $(shell pwd)
 
 export CXX   = $(shell which g++)
@@ -24,28 +23,12 @@ export CC    = $(shell which gcc)
 ###########################################################################
 # Source files, includes, and linker directives...
 ###########################################################################
-INCLUDES    = -I$(WHERE_I_AM)/. -I./iotivity/resource/include/
-INCLUDES   += -I./iotivity/resource/csdk/stack/include/
-INCLUDES   += -I./iotivity/resource/csdk/security/include/
-INCLUDES   += -I./iotivity/resource/csdk/routing/include/
-INCLUDES   += -I./iotivity/resource/csdk/logger/include/
-INCLUDES   += -I./iotivity/resource/c_common/
-INCLUDES   += -I./iotivity/resource/c_common/ocrandom/include/
-INCLUDES   += -I./iotivity/resource/c_common/oic_time/include/
-INCLUDES   += -I./iotivity/resource/c_common/oic_string/include/
-INCLUDES   += -I./iotivity/resource/c_common/oic_malloc/include/
-INCLUDES   += -I./iotivity/resource/oc_logger/include/
-INCLUDES   += -I./iotivity/resource/oic/include/
-INCLUDES   += -I./iotivity/service/resource-encapsulation/include/
+INCLUDES    = -I$(WHERE_I_AM)/. -I/usr/include/resource/
+INCLUDES   += -I/usr/include/service/resource-encapsulation/
 
-
-# This is awful. Sick of fighting with IoTivities constant and unpredictable
-# build-system failure. Until they fix their SDK installation, we are forced
-#   to do this...
-IOTIVITY_LOCUS = $(WHERE_I_AM)/iotivity/out/linux/x86_64/release/
 
 # Libraries to link
-LIBS  = -L$(IOTIVITY_LOCUS) -lstdc++ -lm -lpthread -ldl
+LIBS  = -lstdc++ -lm -lpthread -ldl
 LIBS += -lc_common
 #LIBS += -llogger
 #LIBS += -lcoap
@@ -58,7 +41,7 @@ LIBS += -lrcs_server
 #LIBS += -ltinydtls
 #LIBS += -lresource_hosting -ltimer
 #LIBS += -lplugin_interface
-#LIBS += -lconnectivity_abstraction
+LIBS += -lconnectivity_abstraction
 #LIBS += -lroutingmanager
 #LIBS += -lscene_manager
 #LIBS += -lTGMSDKLibrary
