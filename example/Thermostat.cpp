@@ -136,12 +136,12 @@ void initServer(RCSResourceObject::Ptr* _resource,
 }
 
 
-void updateAttribute(const std::string &attrKey, int control) {
+void updateAttribute(RCSResourceObject::Ptr resource, const std::string &attrKey, int control) {
   const int diff = control == INCREASE ? 1 : - 1;
 
   {
-    RCSResourceObject::LockGuard lock(g_resource0);
-    auto &attrs = g_resource0->getAttributes();
+    RCSResourceObject::LockGuard lock(resource);
+    auto &attrs = resource->getAttributes();
     attrs[attrKey] = attrs[attrKey].get<int>() + diff;
   }
 
@@ -152,13 +152,13 @@ void updateAttribute(const std::string &attrKey, int control) {
     std::cout << attrKey << " decreased." << std::endl;
   }
   std::cout << "\nCurrent " << attrKey << ": "
-        << g_resource0->getAttributeValue(attrKey).get<int>() << std::endl;
+        << resource->getAttributeValue(attrKey).get<int>() << std::endl;
 }
 
 
 void runResourceControl(DisplayControlMenuFunc displayMenuFunc, const std::string &attrKey) {
   displayMenuFunc();
-  updateAttribute(attrKey, processUserInput(INCREASE, DECREASE));
+  updateAttribute(g_resource1, attrKey, processUserInput(INCREASE, DECREASE));
 }
 
 
